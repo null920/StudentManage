@@ -1,3 +1,4 @@
+# 这只是一个丐版项目，许多功能尚未完善，本人仅拿来记录学习过程
 # 运行项目请按照以下步骤
 1. 先创建一个数据库，在<mark>src/main/resources/sql</mark>目录下有数据表的sql文件，您可以直接在您的数据库中运行；
 2. 根据自己电脑的环境，修改位于<mark>src/main/resources</mark>目录下的<mark>application.properties</mark>文件，主要修改数据库配置中的<mark>username</mark>、<mark>password</mark>和<mark>url</mark>。
