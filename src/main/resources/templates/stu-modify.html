@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>修改页面</title>
+
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <!-- CSS Libraries -->
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../assets/css/components.css" th:href="@{/css/components.css}">
+</head>
+
+<body>
+<div id="app">
+    <section class="section">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+                    <div class="login-brand">
+                        <img src="../assets/img/stisla-fill.svg" th:src="@{/img/stisla-fill.svg}" alt="logo" width="100"
+                             class="shadow-light rounded-circle">
+                    </div>
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h4>修改用户</h4>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" th:action="@{/update}">
+                                <input type="hidden" name="id" th:value="${stu.getId()}">
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="stu_Id">学号</label>
+                                        <input th:value="${stu.getStu_Id()}" id="stu_Id" type="text"
+                                               class="form-control" name="stu_Id" readonly>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="stu_Name">姓名</label>
+                                        <input th:value="${stu.getStu_Name()}" id="stu_Name" type="text"
+                                               class="form-control" autofocus maxlength="20" required name="stu_Name">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label>性别</label>
+                                        <select class="form-control selectric" name="stu_Gender">
+                                            <option th:selected="${stu.getStu_Gender()==1}" th:value="1">男</option>
+                                            <option th:selected="${stu.getStu_Gender()==0}" th:value="0">女</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>年龄</label>
+                                        <input th:value="${stu.getStu_Age()}" type="number" class="form-control"
+                                               oninput="if(value>146)value=146;if(value<0)value=0" required
+                                               th:maxlength="3" name="stu_Age">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label>班级</label>
+                                        <select class="form-control select2-container" name="class_No.id">
+                                            <option th:selected="${class.getId()==stu.getClass_No().getId()}"
+                                                    th:each="class:${classes}"
+                                                    th:text="${class.getClass_Name()}"
+                                                    th:value="${class.getId()}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label>专业</label>
+                                        <select class="form-control select2-container" name="stu_Major.id">
+                                            <option th:selected="${major.getId()==stu.getStu_Major().getId()}"
+                                                    th:each="major:${majors}"
+                                                    th:text="${major.getMajor_Name()}"
+                                                    th:value="${major.getId()}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                        修改
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- General JS Scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="../assets/js/stisla.js" th:src="@{/js/stisla.js}"></script>
+
+<!-- JS Libraies -->
+
+<!-- Template JS File -->
+<script src="../assets/js/scripts.js" th:src="@{/js/scripts.js}"></script>
+<script src="../assets/js/custom.js" th:src="@{/js/custom.js}"></script>
+
+<!-- Page Specific JS File -->
+<script src="../assets/js/page/auth-register.js" th:src="@{/js/page/auth-register.js}"></script>
+</body>
+
+</html>

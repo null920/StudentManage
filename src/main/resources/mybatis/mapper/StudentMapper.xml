@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.mapper.StudentMapper">
+
+    <select id="selectClassName" resultType="Classes">
+        select *
+        from class_info
+        where id = #{id};
+    </select>
+
+    <select id="selectMajorName" resultType="Majors">
+        select *
+        from major_info
+        where id = #{id};
+    </select>
+    <resultMap id="stuMap" type="Student">
+        <!--
+            property：要查的是Student类中的哪个属性
+            column：数据库中字段的名字
+            javaType：Student类中属性的类型
+            select：查询这个字段的语句的id
+        -->
+        <association property="class_No" column="class_No" javaType="Classes" select="selectClassName"/>
+        <association property="stu_Major" column="stu_Major" javaType="Majors" select="selectMajorName"/>
+    </resultMap>
+    <select id="selectStuById" resultMap="stuMap">
+        select *
+        from student_info
+        where id = #{id};
+    </select>
+
+    <select id="selectStuByStuId" resultType="Student">
+        select *
+        from student_info
+        where stu_Id = #{stu_Id};
+    </select>
+
+    <select id="selectStuByLimit" resultMap="stuMap">
+        select *
+        from student_info
+        order by stu_Id limit #{page}, 5;
+    </select>
+
+    <select id="countStu" resultType="int">
+        select count(id)
+        from student_info;
+    </select>
+
+    <insert id="addStu" parameterType="Student">
+        insert into student_info (stu_Id, stu_Name, stu_Gender, stu_Age, class_No, stu_Major)
+        values (#{stu_Id}, #{stu_Name}, #{stu_Gender}, #{stu_Age}, #{class_No.id}, #{stu_Major.id});
+    </insert>
+
+    <delete id="delStu">
+        delete
+        from student_info
+        where id = #{id};
+    </delete>
+
+    <update id="updateStu" parameterType="Student">
+        update student_info
+        set stu_Name=#{stu_Name},
+            stu_Gender=#{stu_Gender},
+            stu_Age=#{stu_Age},
+            class_No=#{class_No.id},
+            stu_Major=#{stu_Major.id}
+        where id = #{id};
+    </update>
+</mapper>
